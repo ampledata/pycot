@@ -21,7 +21,8 @@ def parse_qos(qos):
         '(?<priority>\d)-(?<overtaking>\w)-(?<assurance>\w)', qos)
     return matches
 
-def showIndent(outfile, level, pretty_print=True):
+
+def show_indent(outfile, level, pretty_print=True):
     if pretty_print:
         for idx in range(level):
             outfile.write('    ')

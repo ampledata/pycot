@@ -1,6 +1,9 @@
 pycot - Python Cursor on Target Module
 **************************************
 
+Renders and Parses Cursor on Target XML events. Currently a work-in-progress.
+
+
 Installation
 ============
 Install from pypi using pip: ``pip install pycot``

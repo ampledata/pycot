@@ -3,11 +3,7 @@
 
 """Python Cursor on Target Module Class Definitions."""
 
-import datetime
-
 import dexml2
-
-import pycot
 
 __author__ = 'Greg Albrecht <oss@undef.net>'
 __copyright__ = 'Copyright 2017 Orion Labs, Inc.'
@@ -38,7 +34,7 @@ class Event(dexml2.Model):
     time = dexml2.fields.String()
     start = dexml2.fields.String(required=False)
     stale = dexml2.fields.String(required=False)
-    point = dexml2.fields.Model(Point, required=False)  # actually this is required
+    point = dexml2.fields.Model(Point, required=False)  # FIXME
     detail = dexml2.fields.Model(Detail, required=False)
     access = dexml2.fields.String(required=False)
     qos = dexml2.fields.String(required=False)
@@ -55,7 +51,7 @@ class EventType(object):
         self.event_type = event_type
         split_event = event_type.split('-')
         d = dict(zip(self.type_fields[0:len(split_event)], split_event))
-        for k,v in d.iteritems():
+        for k, v in d.iteritems():
             setattr(self, k, v)
 
     def __str__(self):
