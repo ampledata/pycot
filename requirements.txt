@@ -1,0 +1,11 @@
+# Python Distribution Package Requirements for Cursor on Target Module.
+#
+# Source:: https://github.com/OnBeep/pycot
+# Author:: Greg Albrecht <oss@undef.net>
+# Copyright:: Copyright 2017 Orion Labs, Inc.
+# License:: Apache License, Version 2.0
+
+
+flake8
+pylint
+twine
