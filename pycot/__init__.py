@@ -17,7 +17,7 @@ Python Cursor on Target Module.
 
 from .constants import LOG_LEVEL, LOG_FORMAT, BaseStrType  # NOQA
 
-from .utils import cast, showIndent  # NOQA
+from .utils import cast, show_indent  # NOQA
 
 from .functions import parse_event_type  # NOQA
 
