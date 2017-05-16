@@ -7,7 +7,7 @@ Setup for the Python Cursor on Target Module.
 :author: Greg Albrecht <oss@undef.net>
 :copyright: Copyright 2017 Orion Labs, Inc.
 :license: Apache License, Version 2.0
-:source: <https://github.com/OnBeep/pycot>
+:source: <https://github.com/ampledata/pycot>
 """
 
 import os
@@ -43,7 +43,7 @@ setuptools.setup(
     package_dir={'pycot': 'pycot'},
     license=open('LICENSE').read(),
     long_description=open('README.rst').read(),
-    url='https://github.com/OnBeep/pycot',
+    url='https://github.com/ampledata/pycot',
     zip_safe=False,
     include_package_data=True,
     setup_requires=[

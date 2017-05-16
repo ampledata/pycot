@@ -18,11 +18,11 @@ def cast(typ, value):
 
 def parse_qos(qos):
     matches = re.search(
-        '(?<priority>\d)-(?<overtaking>\w)-(?<assurance>\w)', qos)
+        r'(?<priority>\d)-(?<overtaking>\w)-(?<assurance>\w)', qos)
     return matches
 
 
 def show_indent(outfile, level, pretty_print=True):
     if pretty_print:
-        for idx in range(level):
+        for _ in range(level):
             outfile.write('    ')

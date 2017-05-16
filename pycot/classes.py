@@ -3,6 +3,8 @@
 
 """Python Cursor on Target Module Class Definitions."""
 
+import uuid
+
 import dexml2
 
 __author__ = 'Greg Albrecht <oss@undef.net>'
@@ -28,12 +30,19 @@ class Detail(dexml2.Model):
 class Event(dexml2.Model):
     class meta:
         tagname = 'event'
+
+    __str__ = dexml2.Model.render
+
     version = dexml2.fields.Float()
-    type = dexml2.fields.String()
+    event_type = dexml2.fields.String(attrname='type')
+
+    # FIXME: This should be default=uuid.uuid4(), but declaring a default
+    # also causes required=False, and so won't render correctly.
     uid = dexml2.fields.String()
-    time = dexml2.fields.String()
-    start = dexml2.fields.String(required=False)
-    stale = dexml2.fields.String(required=False)
+
+    time = dexml2.fields.DateTime()
+    start = dexml2.fields.DateTime(required=False)
+    stale = dexml2.fields.DateTime(required=False)
     point = dexml2.fields.Model(Point, required=False)  # FIXME
     detail = dexml2.fields.Model(Detail, required=False)
     access = dexml2.fields.String(required=False)
@@ -59,6 +68,7 @@ class EventType(object):
 
 
 class AtomEventType(EventType):
+    "a - atoms (anything you drop on your foot), based on MS2525B."
     describes = 'Thing'
     type_fields = ['_describes', 'affiliation', 'battle_dimension', 'function']
 

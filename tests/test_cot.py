@@ -3,13 +3,14 @@
 
 """Python Cursor on Target Module Tests."""
 
-import unittest
+import datetime
 import logging
-import logging.handlers
+import unittest
+import uuid
 
 from .context import pycot
 
-from . import constants
+#from . import constants
 
 __author__ = 'Greg Albrecht <oss@undef.net>'
 __copyright__ = 'Copyright 2017 Orion Labs, Inc.'
@@ -17,6 +18,9 @@ __license__ = 'Apache License, Version 2.0'
 
 
 class PYCOTTest(unittest.TestCase):  # pylint: disable=R0904
+
+    """Tests for the Python CoT Module."""
+
     _logger = logging.getLogger(__name__)
     if not _logger.handlers:
         _logger.setLevel(pycot.LOG_LEVEL)
@@ -27,6 +31,8 @@ class PYCOTTest(unittest.TestCase):  # pylint: disable=R0904
         _logger.propagate = False
 
     def test_generate_cot(self):
+        """Tests generating a CoT XML Event using pycot."""
+
         _keys = [
             'version', 'event_type', 'access', 'qos', 'opex', 'uid', 'time',
             'start', 'stale', 'how', 'point', 'detail']
@@ -38,19 +44,15 @@ class PYCOTTest(unittest.TestCase):  # pylint: disable=R0904
         my_point.le = '99.5'
         my_point.hae = '-42.6'
 
-        e = pycot.Event()
-        e.version = '0.1'
-        e.type = 'a-h-G-p-i'
-        e.uid = '123'
-        e.time = '123'
-        e.start = '123'
-        e.stale = '123'
-        e.how = 'h-e'
-        e.point = my_point
+        evt = pycot.Event()
+        evt.version = '0.1'
+        evt.event_type = 'a-h-G-p-i'
+        evt.uid = uuid.uuid4()
+        evt.time = datetime.datetime.now()
+        evt.how = 'h-e'
+        evt.point = my_point
 
-        print "--- Generated ---"
-        print e
-        print e.render()
+        self._logger.debug(evt.render(standalone=True, pretty=True))
 
         # for k in _keys:
         #    print getattr(e, k)
@@ -62,7 +64,8 @@ class PYCOTTest(unittest.TestCase):  # pylint: disable=R0904
         #    print e.export(ofd, 1)
 
     def test_parse_cot(self):
-        basic = """<?xml version='1.0' standalone='yes'?>
+        """Tests parsing a CoT XML Event using pycot."""
+        example_event = """<?xml version='1.0' standalone='yes'?>
         <event version="2.0"
          uid="J-01334"
          type="a-h-A-M-F-U-M"
@@ -76,8 +79,26 @@ class PYCOTTest(unittest.TestCase):  # pylint: disable=R0904
          hae="-42.6" le="99.5" />
         </event>
         """
+        parsed = pycot.Event.parse(example_event)
+        self._logger.debug(parsed)
+        self._logger.debug(parsed.render(standalone=True))
+        self._logger.debug(dir(parsed))
+        self.assertEqual(
+            parsed.render(standalone=True),
+            ('<?xml version="1.0" standalone="yes" ?><event version="2.0" '
+             'type="a-h-A-M-F-U-M" '
+             'uid="J-01334" '
+             'time="2005-04-05T11:43:38.070000Z" '
+             'start="2005-04-05T11:43:38.070000Z" '
+             'stale="2005-04-05T11:45:38.070000Z" '
+             'how="m-g"><detail /></event>')
+        )
+        self.assertEqual(parsed.version, 2.0)
+        self.assertEqual(parsed.uid, 'J-01334')
 
-        print "--- Parsed ---"
-        p = pycot.Event
-        x = p.parse(basic)
-        print x.render()
+        # FIXME: These three tests fail b/c of 0000 instead of Z in TZ
+        # self.assertEqual(str(parsed.time), '2005-04-05T11:43:38.07Z')
+        # self.assertEqual(parsed.start, '2005-04-05T11:43:38.07Z')
+        # self.assertEqual(parsed.stale, '2005-04-05T11:45:38.07Z')
+
+        self.assertEqual(parsed.how, 'm-g')
