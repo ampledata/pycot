@@ -22,6 +22,6 @@ LOG_FORMAT = logging.Formatter(
      '%(message)s'))
 
 if sys.version_info.major == 2:
-    BaseStrType = basestring
+    BASESTRINGTYPE = basestring
 else:
-    BaseStrType = str
+    BASESTRINGTYPE = str

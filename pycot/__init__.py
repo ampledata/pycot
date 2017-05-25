@@ -11,13 +11,13 @@ Python Cursor on Target Module.
 :author: Greg Albrecht <oss@undef.net>
 :copyright: Copyright 2017 Orion Labs, Inc.
 :license: Apache License, Version 2.0
-:source: <https://github.com/OnBeep/pycot>
+:source: <https://github.com/ampledata/pycot>
 
 """
 
-from .constants import LOG_LEVEL, LOG_FORMAT, BaseStrType  # NOQA
+from .constants import LOG_LEVEL, LOG_FORMAT, BASESTRINGTYPE  # NOQA
 
-from .utils import cast, showIndent  # NOQA
+#from .utils import cast, showIndent  # NOQA
 
 from .functions import parse_event_type  # NOQA
 
