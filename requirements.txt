@@ -5,4 +5,4 @@
 # Copyright:: Copyright 2017 Orion Labs, Inc.
 # License:: Apache License, Version 2.0
 
-git+https://git@github.com/ampledata/dexml.git@feature/add-datetime-support#egg=dexml
+git+https://git@github.com/ampledata/gexml.git@master#egg=gexml

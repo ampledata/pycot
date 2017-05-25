@@ -5,50 +5,50 @@
 
 import uuid
 
-import dexml2
+import gexml
 
 __author__ = 'Greg Albrecht <oss@undef.net>'
 __copyright__ = 'Copyright 2017 Orion Labs, Inc.'
 __license__ = 'Apache License, Version 2.0'
 
 
-class Point(dexml2.Model):
+class Point(gexml.Model):
     class meta:
         tagname = 'point'
-    lat = dexml2.fields.Float()
-    lon = dexml2.fields.Float()
-    hae = dexml2.fields.Float()
-    ce = dexml2.fields.Float()
-    le = dexml2.fields.Float()
+    lat = gexml.fields.Float()
+    lon = gexml.fields.Float()
+    hae = gexml.fields.Float()
+    ce = gexml.fields.Float()
+    le = gexml.fields.Float()
 
 
-class Detail(dexml2.Model):
+class Detail(gexml.Model):
     class meta:
         tagname = 'detail'
 
 
-class Event(dexml2.Model):
+class Event(gexml.Model):
     class meta:
         tagname = 'event'
 
-    __str__ = dexml2.Model.render
+    __str__ = gexml.Model.render
 
-    version = dexml2.fields.Float()
-    event_type = dexml2.fields.String(attrname='type')
+    version = gexml.fields.Float()
+    event_type = gexml.fields.String(attrname='type')
 
     # FIXME: This should be default=uuid.uuid4(), but declaring a default
     # also causes required=False, and so won't render correctly.
-    uid = dexml2.fields.String()
+    uid = gexml.fields.String()
 
-    time = dexml2.fields.DateTime()
-    start = dexml2.fields.DateTime(required=False)
-    stale = dexml2.fields.DateTime(required=False)
-    point = dexml2.fields.Model(Point, required=False)  # FIXME
-    detail = dexml2.fields.Model(Detail, required=False)
-    access = dexml2.fields.String(required=False)
-    qos = dexml2.fields.String(required=False)
-    opex = dexml2.fields.String(required=False)
-    how = dexml2.fields.String()
+    time = gexml.fields.DateTime()
+    start = gexml.fields.DateTime(required=False)
+    stale = gexml.fields.DateTime(required=False)
+    point = gexml.fields.Model(Point, required=False)  # FIXME
+    detail = gexml.fields.Model(Detail, required=False)
+    access = gexml.fields.String(required=False)
+    qos = gexml.fields.String(required=False)
+    opex = gexml.fields.String(required=False)
+    how = gexml.fields.String()
 
 
 class EventType(object):

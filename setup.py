@@ -52,7 +52,7 @@ setuptools.setup(
       'nose >= 1.3.7'
     ],
     install_requires=[
-        'dexml2>=0.5.3'
+    #    'gexml>=1.0.0'
     ],
     classifiers=[
         'Programming Language :: Python',

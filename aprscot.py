@@ -3,6 +3,7 @@ from __future__ import print_function
 
 import datetime
 import re
+import socket
 
 import aprs
 import pycot
@@ -12,7 +13,7 @@ import pycot
 
 # 3833.55N/12248.93W
 LL_REX = re.compile(
-    r"(?P<aprs_lat>\d{4}\.\d{2})[NS]/(?P<aprs_lng>\d{5}\.\d{2})[EW]"
+    r"(?P<aprs_lat>\d{4}\.\d{2})[NS][^\n]{1}(?P<aprs_lng>\d{5}\.\d{2})[EW]"
 )
 
 def decode_ll(ll):
@@ -36,9 +37,9 @@ def decode_ll(ll):
 
 
 def main():
-    #aprs_filter = 'r/35.7157886/-120.7675918/10'  # McMillian
+    #aprs_filter = 'r/35.7157886/-120.7675918/100'  # McMillian
     aprs_filter = 'r/37.76/-122.4975/100'  # Home
-    aprs_client = aprs.TCP('W2GMD', 'xxx', aprs_filter=aprs_filter)
+    aprs_client = aprs.TCP('W2GMD', '10141', aprs_filter=aprs_filter)
     aprs_client.start()
     aprs_client.receive(to_cot)
 
@@ -54,15 +55,27 @@ def to_cot(aprs_frame):
     my_point.le = '1'
     my_point.hae = '1'
 
-    e = pycot.Event()
-    e.version = '0.1'
-    e.event_type = 'a-.-G-E-V-C'
-    e.uid = 'APRS.%s' % aprs_frame.source
-    e.time = datetime.datetime.now()
-    e.how = 'h-e'
-    e.point = my_point
-    print(e.render(standalone=True))
+    evt = pycot.Event()
+    evt.version = '0.1'
+    evt.event_type = 'a-.-G-E-V-C'
+    evt.uid = 'APRS.%s' % aprs_frame.source
+    evt.time = datetime.datetime.now()
+    evt.how = 'h-e'
+    evt.point = my_point
 
+    print(evt.render(standalone=True))
+    #evt_bytes = str.encode(evt.render(standalone=True))
+    evt_bytes = evt.render(standalone=True)
+    print(evt_bytes)
+
+    addr1 = ('192.168.99.140', 8087)
+    #addr2 = ('192.168.99.140', 18999)
+    addr3 = ('192.168.10.74', 18999)
+
+    cot_int = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    cot_int.sendto(evt_bytes, addr1)
+    #cot_int.sendto(evt_bytes, addr2)
+    cot_int.sendto(evt_bytes, addr3)
 
 if __name__ == '__main__':
     main()
