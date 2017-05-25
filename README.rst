@@ -14,18 +14,18 @@ Build Status
 
 Master:
 
-.. image:: https://travis-ci.org/OnBeep/pycot.svg?branch=master
-    :target: https://travis-ci.org/OnBeep/pycot
+.. image:: https://travis-ci.org/ampledata/pycot.svg?branch=master
+    :target: https://travis-ci.org/ampledata/pycot
 
 Develop:
 
-.. image:: https://travis-ci.org/OnBeep/pycot.svg?branch=develop
-    :target: https://travis-ci.org/OnBeep/pycot
+.. image:: https://travis-ci.org/ampledata/pycot.svg?branch=develop
+    :target: https://travis-ci.org/ampledata/pycot
 
 
 Source
 ======
-Github: https://github.com/OnBeep/pycot
+Github: https://github.com/ampledata/pycot
 
 Author
 ======
