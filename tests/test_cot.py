@@ -45,7 +45,7 @@ class PYCOTTest(unittest.TestCase):  # pylint: disable=R0904
         my_point.hae = '-42.6'
 
         evt = pycot.Event()
-        evt.version = '0.1'
+        evt.version = '2.0'
         evt.event_type = 'a-h-G-p-i'
         evt.uid = uuid.uuid4()
         evt.time = datetime.datetime.now()

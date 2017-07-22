@@ -56,7 +56,7 @@ def to_cot(aprs_frame):
     my_point.hae = '1'
 
     evt = pycot.Event()
-    evt.version = '0.1'
+    evt.version = '2.0'
     evt.event_type = 'a-.-G-E-V-C'
     evt.uid = 'APRS.%s' % aprs_frame.source
     evt.time = datetime.datetime.now()
