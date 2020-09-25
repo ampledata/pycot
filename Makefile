@@ -1,8 +1,8 @@
 # Makefile for Python Cursor on Target Module.
 #
 # Source:: https://github.com/ampledata/pycot
-# Author:: Greg Albrecht <oss@undef.net>
-# Copyright:: Copyright 2017 Orion Labs, Inc.
+# Author:: Greg Albrecht W2GMD <oss@undef.net>
+# Copyright:: Copyright 2020 Orion Labs, Inc.
 # License:: Apache License, Version 2.0
 #
 

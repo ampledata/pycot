@@ -4,8 +4,8 @@
 """
 Setup for the Python Cursor on Target Module.
 
-:author: Greg Albrecht <oss@undef.net>
-:copyright: Copyright 2017 Orion Labs, Inc.
+:author: Greg Albrecht W2GMD <oss@undef.net>
+:copyright: Copyright 2020 Orion Labs, Inc.
 :license: Apache License, Version 2.0
 :source: <https://github.com/ampledata/pycot>
 """
@@ -15,9 +15,9 @@ import setuptools
 import sys
 
 __title__ = 'pycot'
-__version__ = '1.0.0'
-__author__ = 'Greg Albrecht <oss@undef.net>'
-__copyright__ = 'Copyright 2017 Orion Labs, Inc.'
+__version__ = '2.0.0'
+__author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
+__copyright__ = 'Copyright 2020 Orion Labs, Inc.'
 __license__ = 'Apache License, Version 2.0'
 
 
@@ -52,7 +52,7 @@ setuptools.setup(
       'nose >= 1.3.7'
     ],
     install_requires=[
-    #    'gexml>=1.0.0'
+        'gexml>=1.0.0'
     ],
     classifiers=[
         'Programming Language :: Python',

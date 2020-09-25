@@ -8,8 +8,8 @@ Python Cursor on Target Module.
 ~~~~
 
 
-:author: Greg Albrecht <oss@undef.net>
-:copyright: Copyright 2017 Orion Labs, Inc.
+:author: Greg Albrecht W2GMD <oss@undef.net>
+:copyright: Copyright 2020 Orion Labs, Inc.
 :license: Apache License, Version 2.0
 :source: <https://github.com/ampledata/pycot>
 
@@ -17,12 +17,10 @@ Python Cursor on Target Module.
 
 from .constants import LOG_LEVEL, LOG_FORMAT, BASESTRINGTYPE  # NOQA
 
-#from .utils import cast, showIndent  # NOQA
-
 from .functions import parse_event_type  # NOQA
 
-from .classes import Event, Point, Detail  # EventType, AtomEventType, DataEventType  # NOQA
+from .classes import Event, Point, Detail, UID  # NOQA
 
-__author__ = 'Greg Albrecht <oss@undef.net>'
-__copyright__ = 'Copyright 2017 Orion Labs, Inc.'
+__author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
+__copyright__ = 'Copyright 2020 Orion Labs, Inc.'
 __license__ = 'Apache License, Version 2.0'

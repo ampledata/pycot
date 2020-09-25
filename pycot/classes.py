@@ -7,8 +7,8 @@ import uuid
 
 import gexml
 
-__author__ = 'Greg Albrecht <oss@undef.net>'
-__copyright__ = 'Copyright 2017 Orion Labs, Inc.'
+__author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
+__copyright__ = 'Copyright 2020 Orion Labs, Inc.'
 __license__ = 'Apache License, Version 2.0'
 
 
@@ -22,9 +22,16 @@ class Point(gexml.Model):
     le = gexml.fields.Float()
 
 
+class UID(gexml.Model):
+    class meta:
+        tagname = 'uid'
+    Droid = gexml.fields.String()
+
+
 class Detail(gexml.Model):
     class meta:
         tagname = 'detail'
+    uid = gexml.fields.Model(UID, required=False)
 
 
 class Event(gexml.Model):

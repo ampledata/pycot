@@ -1,7 +1,7 @@
 pycot - Python Cursor on Target Module
 **************************************
 
-Renders and Parses Cursor on Target XML events. Currently a work-in-progress.
+Renders and Parses Cursor on Target XML events.
 
 
 Installation
@@ -29,13 +29,13 @@ Github: https://github.com/ampledata/pycot
 
 Author
 ======
-Greg Albrecht oss@undef.net
+Greg Albrecht W2GMD oss@undef.net
 
 http://orionlabs.io/
 
 Copyright
 =========
-Copyright 2017 Orion Labs, Inc.
+Copyright 2020 Orion Labs, Inc.
 
 License
 =======
