@@ -10,7 +10,7 @@ import uuid
 
 from .context import pycot
 
-#from . import constants
+# from . import constants
 
 __author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
 __copyright__ = 'Copyright 2020 Orion Labs, Inc.'

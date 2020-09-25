@@ -15,11 +15,14 @@ Python Cursor on Target Module.
 
 """
 
-from .constants import LOG_LEVEL, LOG_FORMAT, BASESTRINGTYPE  # NOQA
+from .constants import LOG_LEVEL, LOG_FORMAT  # NOQA
+
+from .exceptions import UnsupportedEvent  # NOQA
 
 from .functions import parse_event_type  # NOQA
 
-from .classes import Event, Point, Detail, UID  # NOQA
+from .classes import (Event, Point, Detail, UID, EventType,  # NOQA
+                      AtomEventType, DataEventType)
 
 __author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
 __copyright__ = 'Copyright 2020 Orion Labs, Inc.'

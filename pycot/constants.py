@@ -5,7 +5,6 @@
 
 import logging
 import os
-import sys
 
 __author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
 __copyright__ = 'Copyright 2020 Orion Labs, Inc.'
@@ -21,8 +20,3 @@ else:
 LOG_FORMAT = logging.Formatter(
     ('%(asctime)s pycot %(levelname)s %(name)s.%(funcName)s:%(lineno)d - '
      '%(message)s'))
-
-if sys.version_info.major == 2:
-    BASESTRINGTYPE = basestring
-else:
-    BASESTRINGTYPE = str

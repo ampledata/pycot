@@ -3,8 +3,6 @@
 
 """Python Cursor on Target Module Class Definitions."""
 
-import uuid
-
 import gexml
 
 __author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
@@ -13,7 +11,8 @@ __license__ = 'Apache License, Version 2.0'
 
 
 class Point(gexml.Model):
-    class meta:
+    """CoT Point"""
+    class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
         tagname = 'point'
     lat = gexml.fields.Float()
     lon = gexml.fields.Float()
@@ -23,19 +22,22 @@ class Point(gexml.Model):
 
 
 class UID(gexml.Model):
-    class meta:
+    """CoT UID"""
+    class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
         tagname = 'uid'
     Droid = gexml.fields.String()
 
 
 class Detail(gexml.Model):
-    class meta:
+    """CoT Detail"""
+    class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
         tagname = 'detail'
     uid = gexml.fields.Model(UID, required=False)
 
 
 class Event(gexml.Model):
-    class meta:
+    """CoT Event Object"""
+    class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
         tagname = 'event'
 
     __str__ = gexml.Model.render
@@ -43,14 +45,12 @@ class Event(gexml.Model):
     version = gexml.fields.Float()
     event_type = gexml.fields.String(attrname='type')
 
-    # FIXME: This should be default=uuid.uuid4(), but declaring a default
-    # also causes required=False, and so won't render correctly.
     uid = gexml.fields.String()
 
     time = gexml.fields.DateTime()
     start = gexml.fields.DateTime(required=False)
     stale = gexml.fields.DateTime(required=False)
-    point = gexml.fields.Model(Point, required=False)  # FIXME
+    point = gexml.fields.Model(Point, required=False)
     detail = gexml.fields.Model(Detail, required=False)
     access = gexml.fields.String(required=False)
     qos = gexml.fields.String(required=False)
@@ -58,7 +58,8 @@ class Event(gexml.Model):
     how = gexml.fields.String()
 
 
-class EventType(object):
+class EventType:  # pylint: disable=too-few-public-methods
+    """CoT EventType"""
 
     describes = None
     type_fields = []
@@ -66,20 +67,23 @@ class EventType(object):
     def __init__(self, event_type=None):
         self.event_type = event_type
         split_event = event_type.split('-')
-        d = dict(zip(self.type_fields[0:len(split_event)], split_event))
-        for k, v in d.iteritems():
-            setattr(self, k, v)
+        data = dict(zip(self.type_fields[0:len(split_event)], split_event))
+        for key, val in data.items():
+            setattr(self, key, val)
 
     def __str__(self):
         return self.event_type
 
 
-class AtomEventType(EventType):
-    "a - atoms (anything you drop on your foot), based on MS2525B."
+class AtomEventType(EventType):  # pylint: disable=too-few-public-methods
+    """CoT AtomEventType
+    a - atoms (anything you drop on your foot), based on MS2525B.
+    """
     describes = 'Thing'
     type_fields = ['_describes', 'affiliation', 'battle_dimension', 'function']
 
 
-class DataEventType(EventType):
+class DataEventType(EventType):  # pylint: disable=too-few-public-methods
+    """CoT DataEventType"""
     describes = 'Data'
     type_fields = ['_describes', 'dimension']
