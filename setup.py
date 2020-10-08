@@ -15,7 +15,7 @@ import setuptools
 import sys
 
 __title__ = 'pycot'
-__version__ = '2.0.0'
+__version__ = '2.0.1'
 __author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
 __copyright__ = 'Copyright 2020 Orion Labs, Inc.'
 __license__ = 'Apache License, Version 2.0'
@@ -46,7 +46,7 @@ setuptools.setup(
     url='https://github.com/ampledata/pycot',
     zip_safe=False,
     include_package_data=True,
-    setup_requires=[
+    tests_requires=[
       'coverage >= 3.7.1',
       'httpretty >= 0.8.10',
       'nose >= 1.3.7'
