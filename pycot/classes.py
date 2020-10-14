@@ -4,6 +4,7 @@
 """Python Cursor on Target Module Class Definitions."""
 
 import logging
+import os
 import socket
 import time
 
@@ -139,8 +140,13 @@ class NetworkClient:
 
         self.socket.settimeout(timeout)
 
+        if not os.environ.get('DONT_ADD_NEWLINE'):
+            _event = event
+        else:
+            _event = event + '\n'.encode('UTF-8')
+
         try:
-            self.socket.sendall(event)
+            self.socket.sendall(_event)
             return True
         except Exception as exc:
             self._logger.error(
