@@ -3,7 +3,13 @@
 
 """Python Cursor on Target Module Class Definitions."""
 
+import logging
+import socket
+import time
+
 import gexml
+
+import pycot
 
 __author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
 __copyright__ = 'Copyright 2020 Orion Labs, Inc.'
@@ -28,11 +34,19 @@ class UID(gexml.Model):
     Droid = gexml.fields.String()
 
 
+class Contact(gexml.Model):
+    """CoT Contact"""
+    class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
+        tagname = 'contact'
+    callsign = gexml.fields.String()
+
+
 class Detail(gexml.Model):
     """CoT Detail"""
     class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
         tagname = 'detail'
     uid = gexml.fields.Model(UID, required=False)
+    contact = gexml.fields.Model(Contact, required=False)
 
 
 class Event(gexml.Model):
@@ -87,3 +101,52 @@ class DataEventType(EventType):  # pylint: disable=too-few-public-methods
     """CoT DataEventType"""
     describes = 'Data'
     type_fields = ['_describes', 'dimension']
+
+
+class NetworkClient:
+    """CoT Network Client (TX)."""
+
+    _logger = logging.getLogger(__name__)
+    if not _logger.handlers:
+        _logger.setLevel(pycot.LOG_LEVEL)
+        _console_handler = logging.StreamHandler()
+        _console_handler.setLevel(pycot.LOG_LEVEL)
+        _console_handler.setFormatter(pycot.LOG_FORMAT)
+        _logger.addHandler(_console_handler)
+        _logger.propagate = False
+
+    def __init__(self, cot_host: str) -> None:
+        if ':' in cot_host:
+            self.addr, port = cot_host.split(':')
+            self.port: int = int(port)
+        else:
+            self.addr: str = cot_host
+            self.port: int = int(pycot.DEFAULT_COT_PORT)
+        self._start_socket()
+        self._logger.info('Using CoT Host %s:%s', self.addr, self.port)
+
+    def _start_socket(self) -> None:
+        """Starts the TCP Socket for sending CoT events."""
+        self._logger.debug('Setting up socket.')
+        self.socket: socket.socket = socket.socket(
+            socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.connect((self.addr, self.port))
+        self.socket.setblocking(False)
+
+    def sendall(self, event) -> bool:
+        # is the socket alive?
+        assert(self.socket.fileno() != -1)
+
+        self.socket.settimeout(0.5)
+
+        try:
+            self.socket.sendall(event)
+            return True
+        except Exception as exc:
+            self._logger.error(
+                'socket.sendall raised an Exception, sleeping: ')
+            self._logger.exception(exc)
+            # TODO: Make this value configurable, or add ^backoff.
+            #time.sleep(5)
+            #self._start_socket()
+            return False
