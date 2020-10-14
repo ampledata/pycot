@@ -123,12 +123,15 @@ class NetworkClient:
         else:
             self.addr: str = cot_host
             self.port: int = int(pycot.DEFAULT_COT_PORT)
+        self.socket: socket.socket = None
         self._start_socket()
         self._logger.info('Using CoT Host %s:%s', self.addr, self.port)
 
     def _start_socket(self) -> None:
         """Starts the TCP Socket for sending CoT events."""
         self._logger.debug('Setting up socket.')
+        if self.socket is not None:
+            self.socket.close()
         self.socket: socket.socket = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.addr, self.port))
@@ -153,6 +156,6 @@ class NetworkClient:
                 'socket.sendall raised an Exception, sleeping: ')
             self._logger.exception(exc)
             # TODO: Make this value configurable, or add ^backoff.
-            #time.sleep(5)
-            #self._start_socket()
+            time.sleep(2)
+            self._start_socket()
             return False
