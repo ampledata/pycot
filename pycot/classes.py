@@ -133,11 +133,11 @@ class NetworkClient:
         self.socket.connect((self.addr, self.port))
         self.socket.setblocking(False)
 
-    def sendall(self, event) -> bool:
+    def sendall(self, event: bytes, timeout: int = 1) -> bool:
         # is the socket alive?
         assert(self.socket.fileno() != -1)
 
-        self.socket.settimeout(0.5)
+        self.socket.settimeout(timeout)
 
         try:
             self.socket.sendall(event)
