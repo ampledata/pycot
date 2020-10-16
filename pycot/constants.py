@@ -23,6 +23,4 @@ else:
         ('%(asctime)s pycot %(levelname)s - %(message)s'))
 
 
-
-
 DEFAULT_COT_PORT: int = 8087

@@ -14,13 +14,13 @@ Build Status
 
 Master:
 
-.. image:: https://travis-ci.org/ampledata/pycot.svg?branch=master
-    :target: https://travis-ci.org/ampledata/pycot
+.. image:: https://travis-ci.com/ampledata/pycot.svg?branch=master
+    :target: https://travis-ci.com/ampledata/pycot
 
 Develop:
 
-.. image:: https://travis-ci.org/ampledata/pycot.svg?branch=develop
-    :target: https://travis-ci.org/ampledata/pycot
+.. image:: https://travis-ci.com/ampledata/pycot.svg?branch=develop
+    :target: https://travis-ci.com/ampledata/pycot
 
 
 Source
@@ -31,7 +31,7 @@ Author
 ======
 Greg Albrecht W2GMD oss@undef.net
 
-http://orionlabs.io/
+https://www.orionlabs.io/
 
 Copyright
 =========

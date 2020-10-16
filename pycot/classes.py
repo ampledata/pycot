@@ -23,9 +23,10 @@ class Point(gexml.Model):
         tagname = 'point'
     lat = gexml.fields.Float()
     lon = gexml.fields.Float()
-    hae = gexml.fields.Float()
+    hae = gexml.fields.Float(required=False)
     ce = gexml.fields.Float()
     le = gexml.fields.Float()
+    version = gexml.fields.String(required=False)
 
 
 class UID(gexml.Model):
@@ -33,13 +34,46 @@ class UID(gexml.Model):
     class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
         tagname = 'uid'
     Droid = gexml.fields.String()
+    version = gexml.fields.String(required=False)
 
 
 class Contact(gexml.Model):
     """CoT Contact"""
     class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
         tagname = 'contact'
-    callsign = gexml.fields.String()
+    callsign = gexml.fields.String(required=False)
+    freq = gexml.fields.String(required=False)
+    email = gexml.fields.String(required=False)
+    dsn = gexml.fields.String(required=False)
+    phone = gexml.fields.String(required=False)
+    modulation = gexml.fields.String(required=False)
+    hostname = gexml.fields.String(required=False)
+    version = gexml.fields.String(required=False)
+
+
+class Track(gexml.Model):
+    """CoT Track"""
+    class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
+        tagname = 'track'
+    course = gexml.fields.String()
+    speed = gexml.fields.String()
+    slope = gexml.fields.String(required=False)
+    eCourse = gexml.fields.String(required=False)
+    eSpeed = gexml.fields.String(required=False)
+    eSlope = gexml.fields.String(required=False)
+    version = gexml.fields.String(required=False)
+
+
+class Remarks(gexml.Model):
+    """CoT Track"""
+    class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
+        tagname = 'remarks'
+    value = gexml.fields.String(tagname='.', required=False)
+    source = gexml.fields.String(required=False)
+    time = gexml.fields.String(required=False)
+    to = gexml.fields.String(required=False)
+    keywords = gexml.fields.String(required=False)
+    version = gexml.fields.String(required=False)
 
 
 class Detail(gexml.Model):
@@ -48,6 +82,8 @@ class Detail(gexml.Model):
         tagname = 'detail'
     uid = gexml.fields.Model(UID, required=False)
     contact = gexml.fields.Model(Contact, required=False)
+    track = gexml.fields.Model(Track, required=False)
+    remarks = gexml.fields.Model(Remarks, required=False)
 
 
 class Event(gexml.Model):
