@@ -140,6 +140,7 @@ class DataEventType(EventType):  # pylint: disable=too-few-public-methods
     type_fields = ['_describes', 'dimension']
 
 
+# Dear Reader, Py3 doesn't need to inherit from Object anymore!
 class NetworkClient:
     """CoT Network Client (TX)."""
 
@@ -152,46 +153,92 @@ class NetworkClient:
         _logger.addHandler(_console_handler)
         _logger.propagate = False
 
-    def __init__(self, cot_host: str) -> None:
+    def __init__(self, cot_host: str, cot_port: int = None,
+                 broadcast: bool = False) -> None:
+        self.broadcast = broadcast
+
+        self.socket: socket.socket = None
+        self.addr: str = None
+        self.port: int = None
+
         if ':' in cot_host:
             self.addr, port = cot_host.split(':')
-            self.port: int = int(port)
+            self.port = int(port)
+        elif cot_port:
+            self.addr = cot_host
+            self.port = int(cot_port)
         else:
-            self.addr: str = cot_host
-            self.port: int = int(pycot.DEFAULT_COT_PORT)
-        self.socket: socket.socket = None
-        self._start_socket()
-        self._logger.info('Using CoT Host %s:%s', self.addr, self.port)
+            self.addr = cot_host
+            self.port = int(pycot.DEFAULT_COT_PORT)
 
-    def _start_socket(self) -> None:
-        """Starts the TCP Socket for sending CoT events."""
-        self._logger.debug('Setting up socket.')
+        self.socket_addr = f'{self.addr}:{self.port}'
+        self._logger.info('Using CoT Host %s', self.socket_addr)
+
+        if self.broadcast:
+            self._setup_broadcast_socket()
+        else:
+            self._setup_unicast_socket()
+
+    def _setup_unicast_socket(self) -> None:
+        """Sets up the TCP Unicast Socket for sending CoT events."""
+        self._logger.debug('Setting up Unicast Socket.')
         if self.socket is not None:
             self.socket.close()
-        self.socket: socket.socket = socket.socket(
-            socket.AF_INET, socket.SOCK_STREAM)
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.addr, self.port))
-        self.socket.setblocking(False)
+
+    def _setup_broadcast_socket(self) -> None:
+        """Sets up the UDP Broadcast Socket for sending CoT events."""
+        self._logger.debug('Setting up Broadcast Socket.')
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+
+    def send_cot(self, event: bytes, timeout: int = 1) -> bool:
+        """Wrapper for sending TCP Unicast or UDP Broadcast CoT Events."""
+        if os.environ.get('DONT_ADD_NEWLINE'):
+            _event = event
+        else:
+            _event = event + b'\n'
+
+        self._logger.debug('Sending CoT to %s: "%s"', self.socket_addr, _event)
+
+        if self.broadcast:
+            return self.sendto(_event)
+        else:
+            return self.sendall(_event, timeout)
+
+    def close(self):
+        self.socket.close()
 
     def sendall(self, event: bytes, timeout: int = 1) -> bool:
+        """Sends a CoT Event to a TCP Unicast address."""
         # is the socket alive?
-        assert(self.socket.fileno() != -1)
+        assert self.socket.fileno() is not -1
 
         self.socket.settimeout(timeout)
 
-        if not os.environ.get('DONT_ADD_NEWLINE'):
-            _event = event
-        else:
-            _event = event + '\n'.encode('UTF-8')
-
         try:
-            self.socket.sendall(_event)
+            self.socket.sendall(event)
             return True
         except Exception as exc:
             self._logger.error(
-                'socket.sendall raised an Exception, sleeping: ')
+                'socket.sendall() raised an Exception, sleeping: ')
             self._logger.exception(exc)
             # TODO: Make this value configurable, or add ^backoff.
             time.sleep(2)
-            self._start_socket()
+            self._setup_unicast_socket()
+            return False
+
+    def sendto(self, event: bytes) -> bool:
+        """Sends a CoT Event to a UDP Broadcast address."""
+        try:
+            self.socket.sendto(event, (self.addr, self.port))
+            return True
+        except Exception as exc:
+            self._logger.error(
+                'socket.sendto() raised an Exception, sleeping: ')
+            self._logger.exception(exc)
+            # TODO: Make this value configurable, or add ^backoff.
+            time.sleep(2)
+            self._setup_broadcast_socket()
             return False

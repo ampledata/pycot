@@ -15,7 +15,7 @@ import setuptools
 import sys
 
 __title__ = 'pycot'
-__version__ = '2.3.0'
+__version__ = '2.4.0'
 __author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
 __copyright__ = 'Copyright 2020 Orion Labs, Inc.'
 __license__ = 'Apache License, Version 2.0'
@@ -33,11 +33,11 @@ publish()
 
 
 setuptools.setup(
+    version=__version__,
     name=__title__,
     packages=[__title__],
     package_dir={__title__: __title__},
     url=f'https://github.com/ampledata/{__title__}',
-    version=__version__,
     description='Python Cursor on Target Module.',
     author='Greg Albrecht',
     author_email='oss@undef.net',
