@@ -15,13 +15,12 @@ Python Cursor on Target Module.
 
 """
 
-from .constants import LOG_LEVEL, LOG_FORMAT, DEFAULT_COT_PORT  # NOQA
+from .constants import LOG_LEVEL, LOG_FORMAT  # NOQA
 
 from .exceptions import UnsupportedEvent  # NOQA
 
 from .classes import (Event, Point, Detail, UID, Contact, EventType,  # NOQA
-                      AtomEventType, DataEventType, NetworkClient, Track,
-                      Remarks)
+                      AtomEventType, DataEventType, Track, Remarks)
 
 from .functions import parse_event_type  # NOQA
 
