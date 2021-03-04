@@ -1,0 +1,25 @@
+Source: pycot
+Section: python
+Priority: optional
+Maintainer: Greg Albrecht <oss@undef.net>
+Uploaders: Daniel Leidert <dleidert@debian.org>
+Build-Depends: debhelper-compat (= 12),
+               dh-python,
+               python3-all,
+               python3-gexml,
+               python3-setuptools
+Standards-Version: 4.5.1
+Homepage: https://github.com/ampledata/pycot
+Vcs-Browser: https://salsa.debian.org/dleidert/pycot
+Vcs-Git: https://salsa.debian.org/dleidert/pycot.git
+Rules-Requires-Root: no
+Testsuite: autopkgtest-pkg-python
+
+Package: python3-pycot
+Architecture: any
+Provides: ${python3:Provides}
+Depends: ${misc:Depends},
+         ${python3:Depends},
+         ${shlibs:Depends}
+Description: cursor on target module
+ The pycot module renders and parses cursor on target XML events.

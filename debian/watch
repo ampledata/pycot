@@ -1,0 +1,7 @@
+version=4
+opts=uversionmangle=s/(rc|a|b|c)/~$1/ \
+https://pypi.debian.net/pycot/pycot-(.+)\.(?:zip|tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))
+
+# Github tags
+#opts="filenamemangle=s%(?:.*?)?v?(\d[\d.]*)(@ARCHIVE_EXT@)%@PACKAGE@-$1$2%" \
+#  https://github.com/ampledata/pycot/tags .*/v?@ANY_VERSION@@ARCHIVE_EXT@

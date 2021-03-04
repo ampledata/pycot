@@ -1,0 +1,16 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pycot
+Upstream-Contact: Greg Albrecht <oss@undef.net>
+Source: https://github.com/ampledata/pycot
+
+Files: *
+Copyright: 2020 Orion Labs, Inc.
+License: Apache-2.0
+
+Files: debian/*
+Copyright: 2021 Daniel Leidert <dleidert@debian.org>
+License: Apache-2.0
+
+License: Apache-2.0
+ On Debian systems the full text of the license is available in the
+ file `/usr/share/common-licenses/Apache-2.0`.

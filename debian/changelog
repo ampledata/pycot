@@ -1,0 +1,5 @@
+pycot (2.5.0-1) unstable; urgency=medium
+
+  * Initial release (Closes: #983820)
+
+ -- Daniel Leidert <dleidert@debian.org>  Thu, 04 Mar 2021 01:38:57 +0100
