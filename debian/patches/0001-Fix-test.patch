@@ -1,0 +1,23 @@
+From: Daniel Leidert <daniel.leidert@wgdd.de>
+Date: Thu, 4 Mar 2021 13:58:32 +0100
+Subject: Fix test
+
+Forwarded: yes
+
+---
+ tests/test_cot.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/test_cot.py b/tests/test_cot.py
+index af2f1f1..20f918e 100644
+--- a/tests/test_cot.py
++++ b/tests/test_cot.py
+@@ -93,7 +93,7 @@ class PYCOTTest(unittest.TestCase):  # pylint: disable=R0904
+              'stale="2005-04-05T11:45:38.070000Z" '
+              'how="m-g"><detail /></event>')
+         )
+-        self.assertEqual(parsed.version, 2.0)
++        self.assertEqual(parsed.version, '2.0')
+         self.assertEqual(parsed.uid, 'J-01334')
+ 
+         # FIXME: These three tests fail b/c of 0000 instead of Z in TZ
