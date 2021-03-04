@@ -3,11 +3,14 @@
 
 """Python Cursor on Target Module Class Definitions."""
 
+import datetime
+import uuid
+
 import gexml
 
-__author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
-__copyright__ = 'Copyright 2020 Orion Labs, Inc.'
-__license__ = 'Apache License, Version 2.0'
+__author__ = "Greg Albrecht W2GMD <oss@undef.net>"
+__copyright__ = "Copyright 2020 Orion Labs, Inc."
+__license__ = "Apache License, Version 2.0"
 
 
 class Point(gexml.Model):
@@ -44,6 +47,26 @@ class Contact(gexml.Model):
     version = gexml.fields.String(required=False)
 
 
+class ChatGroup(gexml.Model):
+    class meta:
+        tagname = 'chatgrp'
+    uid0 = gexml.fields.String(required=False)
+    uid1 = gexml.fields.String(required=False)
+    id = gexml.fields.String(required=False)
+
+
+class Chat(gexml.Model):
+    """CoT Chat"""
+    class meta:
+        tagname = '__chat'
+    senderCallsign = gexml.fields.String(required=False)
+    chatroom = gexml.fields.String(required=False)
+    groupOwner = gexml.fields.String(required=False)
+    id = gexml.fields.String(required=False)
+    parent = gexml.fields.String(required=False)
+    chatgrp = gexml.fields.Model(ChatGroup, required=False)
+
+
 class Track(gexml.Model):
     """CoT Track"""
     class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
@@ -69,6 +92,20 @@ class Remarks(gexml.Model):
     version = gexml.fields.String(required=False)
 
 
+class Link(gexml.Model):
+    class meta:
+        tagname = "link"
+    uid = gexml.fields.String(required=False)
+    production_time = gexml.fields.String(required=False)
+    event_type = gexml.fields.String(attrname="type")
+    url = gexml.fields.String(required=False)
+    parent_callsign = gexml.fields.String(required=False)
+    remarks = gexml.fields.String(required=False)
+    mime = gexml.fields.String(required=False)
+    version = gexml.fields.String(required=False)
+    relation = gexml.fields.String(required=False)
+
+
 class Detail(gexml.Model):
     """CoT Detail"""
     class meta:  # NOQA pylint: disable=invalid-name,missing-class-docstring,too-few-public-methods
@@ -77,6 +114,8 @@ class Detail(gexml.Model):
     contact = gexml.fields.Model(Contact, required=False)
     track = gexml.fields.Model(Track, required=False)
     remarks = gexml.fields.Model(Remarks, required=False)
+    link = gexml.fields.Model(Link, required=False)
+    chat = gexml.fields.Model(Chat, required=False)
 
 
 class Event(gexml.Model):
@@ -86,12 +125,12 @@ class Event(gexml.Model):
 
     __str__ = gexml.Model.render
 
-    version = gexml.fields.Float()
-    event_type = gexml.fields.String(attrname='type')
+    version = gexml.fields.String(required=True)  # default="2.0"
+    event_type = gexml.fields.String(attrname="type")
 
-    uid = gexml.fields.String()
+    uid = gexml.fields.String(required=True)  # default=uuid.uuid4()
 
-    time = gexml.fields.DateTime()
+    time = gexml.fields.DateTime(required=True)  # NOQA default=datetime.datetime.now(datetime.timezone.utc)
     start = gexml.fields.DateTime(required=False)
     stale = gexml.fields.DateTime(required=False)
     point = gexml.fields.Model(Point, required=False)
@@ -131,3 +170,8 @@ class DataEventType(EventType):  # pylint: disable=too-few-public-methods
     """CoT DataEventType"""
     describes = 'Data'
     type_fields = ['_describes', 'dimension']
+
+test_chat = """
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<event version="2.0" uid="GeoChat.FFF-1" type="b-t-f" time="2020-11-15T07:40:58.816Z" start="2020-11-15T07:40:58.816Z" stale="2020-11-16T07:40:58.816Z" how="h-g-i-g-o"><point lat="0.0" lon="0.0" hae="9999999.0" ce="9999999.0" le="9999999.0"/><detail><link uid="AAA-1" type="a-f-G-U-C" relation="p-p"/><__chat parent="RootContactGroup" groupOwner="false" chatroom="All Chat Rooms" id="All Chat Rooms" senderCallsign="FFF-1"><chatgrp uid0="FFF-1" uid1="All Chat Rooms" id="All Chat Rooms"/></__chat><remarks source="FFF-1" to="All Chat Rooms" time="2020-11-15T07:40:58.816Z">FFF-1</remarks><__serverdestination destinations="172.17.2.246:8087:tcp:FFF-1"/></detail></event>
+"""

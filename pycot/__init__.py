@@ -20,10 +20,11 @@ from .constants import LOG_LEVEL, LOG_FORMAT  # NOQA
 from .exceptions import UnsupportedEvent  # NOQA
 
 from .classes import (Event, Point, Detail, UID, Contact, EventType,  # NOQA
-                      AtomEventType, DataEventType, Track, Remarks)
+                      AtomEventType, DataEventType, Track, Remarks, Chat,
+                      ChatGroup, Link)
 
 from .functions import parse_event_type  # NOQA
 
-__author__ = 'Greg Albrecht W2GMD <oss@undef.net>'
-__copyright__ = 'Copyright 2020 Orion Labs, Inc.'
-__license__ = 'Apache License, Version 2.0'
+__author__ = "Greg Albrecht W2GMD <oss@undef.net>"
+__copyright__ = "Copyright 2020 Orion Labs, Inc."
+__license__ = "Apache License, Version 2.0"
