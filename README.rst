@@ -1,3 +1,8 @@
+DEPRECATED
+**********
+PyCOT has been deprecated. Please see my other projects based on PyTAK: https://github.com/ampledata/pytak
+
+
 pycot - Python Cursor on Target Module
 **************************************
 
